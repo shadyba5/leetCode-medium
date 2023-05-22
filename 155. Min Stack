@@ -1,0 +1,62 @@
+
+struct Node{
+    int val;
+    Node* next;
+    int minInSubStack;
+};
+
+class MinStack {
+private:
+    Node *stack;
+    int size;
+public:
+    MinStack() {
+        this->stack= new Node;
+        this->stack->next= nullptr;
+        this->size=0;
+    }
+    void push(int val) {
+        Node* element = new Node;
+        element->val=val;
+        if(this->size==0){
+            this->stack->next=element;
+            element->next= nullptr;
+            element->minInSubStack=val;
+        }
+        else{
+            element->minInSubStack = val < this->getMin() ? val: this->getMin();
+            element->next=this->stack->next;
+            stack->next=element;
+        }
+        this->size++;
+    }
+    void pop() {
+        if(size==0)
+            return;
+        if(this->size==1){
+            stack->next= nullptr;
+            size--;
+        }
+        else{
+            stack->next=stack->next->next;
+            size--;
+        }
+    }
+    int top() {
+        return stack->next->val;
+    }
+
+    int getMin() {
+        return stack->next->minInSubStack;
+    }
+};
+
+
+int main(){
+    MinStack* obj = new MinStack();
+    obj->push(3);
+    obj->pop();
+    int param_3 = obj->top();
+    int param_4 = obj->getMin();
+    return 0;
+}
