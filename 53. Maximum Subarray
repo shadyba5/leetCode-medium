@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int maxSum = std::numeric_limits<int>::min();
+        int r=0,l=0;
+        int sum=0;
+        while(r<nums.size()){
+            sum+=nums[r];
+            if(sum>maxSum){
+                maxSum=sum;
+            }
+            if(nums[r]<0){
+                if(sum<0){
+                    r++;
+                    l=r;
+                    sum=0;
+                    continue;
+                }
+            }
+            r++;
+        }
+        return maxSum;
+    }
+};
