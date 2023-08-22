@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int maxLen=0;
+        if(s.empty())
+            return 0;
+        int size=s.length();
+        int l=0;
+        vector<int> lastIdx(128,-1);
+        for (int r = 0; r < size; ++r) {
+            if(lastIdx[s[r]] >= l){
+                l=lastIdx[s[r]]+1;
+            }
+            maxLen= max(r-l+1, maxLen);
+            lastIdx[s[r]]=r;
+            
+        }
+        return maxLen;
+    }
+};
