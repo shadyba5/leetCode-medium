@@ -1,0 +1,33 @@
+class Solution {
+public:
+    static string longestPalindrome(string s) {
+        int len=s.size();
+        int maxLen=0;
+        int l;
+        int r;
+        string res;
+        for (int i = 0; i < len; ++i) {//pass on every letter to check if it is a center of a palindrome
+            l=i;
+            r=l;
+            while( l>=0 && r<s.size() && s[l]==s[r] )  { //stop when its not a palindrom//CASE1 odd length.
+                l--;
+                r++;
+            }
+            if( r-l-1 > maxLen){//check if we beat max length substring palindrome
+                maxLen=r-l-1;
+                res=s.substr(l+1,r-l-1);
+            }
+            l=i;
+            r=i+1;
+            while( l>=0 && r<s.size() && s[l]==s[r] ){//stop when its not a palindrom//CASE2 even length.
+                l--;
+                r++;
+            }
+            if( r-l-1 > maxLen){//check if we beat max length substring palindrome
+                maxLen=r-l-1;
+                res=s.substr(l+1,r-l-1);
+            }
+        }
+        return res;
+    }
+};
