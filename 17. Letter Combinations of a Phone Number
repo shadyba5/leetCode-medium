@@ -1,0 +1,42 @@
+
+class Solution {
+public:
+    vector<string> lCaux(vector<string> strings,int string_idx){
+        vector<string> finalRes;
+        if(string_idx==strings.size()-1){
+            for (int j = 0; j < strings[string_idx].size(); ++j) {
+                string str;
+                str.push_back(strings[string_idx][j]);
+                finalRes.push_back(str);
+            }
+            return finalRes;
+        }
+        vector<string> vec = (lCaux(strings,string_idx+1));
+        for (int i = 0; i < strings[string_idx].size(); ++i) {
+            string res;
+            res.push_back(strings[string_idx][i]);
+            for (int j = 0; j < vec.size(); ++j) {
+                finalRes.push_back(res+vec[j]);
+            }
+        }
+        return finalRes;
+    }
+    vector<string> letterCombinations(string digits) {
+        if(digits.empty())
+            return {};
+        vector<string> asso;
+        for (int i = 0; i < digits.size(); ++i) {
+            switch (digits[i]) {
+                case '2':   asso.push_back("abc");   break;
+                case '3':   asso.push_back("def");   break;
+                case '4':   asso.push_back("ghi");   break;
+                case '5':   asso.push_back("jkl");   break;
+                case '6':   asso.push_back("mno");   break;
+                case '7':   asso.push_back("pqrs");  break;
+                case '8':   asso.push_back("tuv");   break;
+                case '9':   asso.push_back("wxyz");  break;
+            }
+        }
+        return lCaux(asso,0);
+    }
+};
