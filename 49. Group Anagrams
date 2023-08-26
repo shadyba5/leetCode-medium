@@ -1,14 +1,16 @@
+
+
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
         vector<vector<string>> res;
         vector<bool> used(strs.size(),false);
         for (int i = 0; i < strs.size(); i++ ) {
+            vector<int> hist(26,0);
             vector<string> temp={strs[i]};
             if(used[i])
                 continue;
             used[i]=true;
-            vector<int> hist(26,0);
             for (int j = 0; j < strs[i].size() ; ++j) {
                 hist[(strs[i][j])-'a']++;
             }
@@ -16,17 +18,22 @@ public:
                 if(used[j])
                     continue;
                 vector<int> tempHist=hist;
-                bool anagram = true;
                 for (int k = 0; k < strs[j].size() ; ++k) {
-                    if((--tempHist[strs[j][k]-'a'])<0){
+                    tempHist[strs[j][k]-'a']--;
+                }
+                bool anagram = true;
+                for (int k = 0; k < 26; ++k) {
+                    if(tempHist[k]!=0){
                         anagram=false;
                         break;
                     }
                 }
+
                 if(anagram){
                     used[j]=true;
                     temp.push_back(strs[j]);
                 }
+
             }
             res.push_back(temp);
         }
